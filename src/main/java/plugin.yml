@@ -1,0 +1,13 @@
+name: MiccGens
+description: A plugin made by Micc for MiccGens
+version: 0.1-SNAPSHOT
+main: me.miccdev.miccgens.Main
+api-version: 1.19
+
+commands:
+  generator:
+    description: Creates a generator at the players position.
+  mgitem:
+    description: Gives a custom item to the player.
+  spawn:
+    description: Teleports you to the spawn of the world you're in.
