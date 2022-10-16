@@ -42,7 +42,7 @@ public class EntityDamageEntity extends CustomEvent {
 		if(!(damagerEntity instanceof Player)) return;
 		Player damager = (Player) damagerEntity;
 		
-		ItemStack damagersItem = damager.getItemInHand();
+		ItemStack damagersItem = damager.getInventory().getItemInMainHand();
 		
 		if(!CustomItem.isCustomItem(damagersItem)) return;
 		if(!(((CustomItem) damagersItem) instanceof CustomWeapon)) return;

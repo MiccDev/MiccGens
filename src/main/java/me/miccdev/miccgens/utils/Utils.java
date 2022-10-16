@@ -16,10 +16,11 @@ import net.md_5.bungee.api.ChatColor;
 public class Utils {
 
 	public static String Prefix = toColour("&e[&l&3MiccGens&r&e]:");
+
 	public static String toColour(String txt) {
 		return ChatColor.translateAlternateColorCodes('&', txt);
 	}
-	
+
 	public static void savePlayerData(String uuid, Inventory inventory) {
 		FileConfiguration config = Main.playerData.getConfig();
 		String path = "players." + uuid + ".accessories";

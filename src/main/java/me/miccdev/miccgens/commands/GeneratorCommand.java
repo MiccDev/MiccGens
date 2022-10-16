@@ -187,6 +187,7 @@ public class GeneratorCommand extends CustomCommand {
 				return getPlugin().itemList.stream().filter(m -> m.contains(args[1])).collect(Collectors.toList());
 			}
 			return getPlugin().itemList;
+
 		}
 		return null;
 	}

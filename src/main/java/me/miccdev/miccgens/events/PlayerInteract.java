@@ -19,7 +19,7 @@ public class PlayerInteract extends CustomEvent {
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		Action a = event.getAction();
-		ItemStack heldItem = player.getInventory().getItem(player.getInventory().getHeldItemSlot());
+		ItemStack heldItem = player.getInventory().getItemInMainHand();
 		
 		if(a == Action.PHYSICAL) return;
 		if(heldItem == null) return;
