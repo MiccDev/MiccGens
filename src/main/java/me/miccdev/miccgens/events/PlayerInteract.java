@@ -15,12 +15,11 @@ public class PlayerInteract extends CustomEvent {
 		super(plugin);
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		Action a = event.getAction();
-		ItemStack heldItem = player.getItemInHand();
+		ItemStack heldItem = player.getInventory().getItem(player.getInventory().getHeldItemSlot());
 		
 		if(a == Action.PHYSICAL) return;
 		if(heldItem == null) return;

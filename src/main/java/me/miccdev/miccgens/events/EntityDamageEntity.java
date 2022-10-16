@@ -16,22 +16,22 @@ public class EntityDamageEntity extends CustomEvent {
 	public EntityDamageEntity(Main plugin) {
 		super(plugin);
 	}
+/*
+	@EventHandler
+	public void onEntityDamage(EntityDamageEvent e) {
+		Entity entity = e.getEntity();
 
-//	@EventHandler
-//	public void onEntityDamage(EntityDamageEvent e) {
-//		Entity entity = e.getEntity();
-//		
-//		if(e.getCause().equals(DamageCause.CONTACT)) {
-//			e.setCancelled(true);
-//			return;
-//		}
-//		
-//		if(e.getCause().equals(DamageCause.ENTITY_ATTACK)) return;
-//		if(entity instanceof Player) {
-//			handlePlayerFunctions((Player) entity, e.getDamage());
-//		}
-//	}
-	
+		if(e.getCause().equals(DamageCause.CONTACT)) {
+			e.setCancelled(true);
+			return;
+		}
+
+		if(e.getCause().equals(DamageCause.ENTITY_ATTACK)) return;
+		if(entity instanceof Player) {
+			handlePlayerFunctions((Player) entity, e.getDamage());
+		}
+	}
+*/
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onEntityDamageEntity(EntityDamageByEntityEvent e) {

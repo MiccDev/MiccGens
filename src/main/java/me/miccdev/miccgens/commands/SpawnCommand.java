@@ -22,7 +22,7 @@ public class SpawnCommand extends CustomCommand {
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label,
 			@NotNull String[] args) {
 		if(!(sender instanceof Player)) {
-			sender.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &4Only players can use this command!"));
+			sender.sendMessage(Utils.Prefix + Utils.toColour(" &4Only players can use this command!"));
 			return true;
 		}
 		
