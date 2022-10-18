@@ -35,14 +35,14 @@ public class GeneratorCommand extends CustomCommand {
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label,
 			@NotNull String[] args) {
 		if(!(sender instanceof Player)) {
-			sender.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &4Only players can use this command!"));
+			sender.sendMessage(Utils.Prefix + Utils.toColour(" &4Only players can use this command!"));
 			return true;
 		}
 		
 		Player plr = (Player) sender;
 		
 		if(!plr.hasPermission("miccgens.gens")) {
-			plr.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &4Only staff members can create generators."));
+			plr.sendMessage(Utils.Prefix + Utils.toColour(" &4Only staff members can create generators."));
 			plr.playSound(plr, Sound.ENTITY_VILLAGER_NO, 0.5f, 1);
 			return true;
 		}
@@ -53,7 +53,7 @@ public class GeneratorCommand extends CustomCommand {
 			case "remove":
 				return remove(plr, args);
 			default:
-				plr.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &4Expected 'create' or 'remove'."));
+				plr.sendMessage(Utils.Prefix + Utils.toColour(" &4Expected 'create' or 'remove'."));
 				plr.playSound(plr, Sound.ENTITY_VILLAGER_NO, 0.5f, 1);
 				return false;
 		}
@@ -62,7 +62,7 @@ public class GeneratorCommand extends CustomCommand {
 	@SuppressWarnings({ "unchecked" })
 	public boolean remove(Player plr, String[] args) {
 		if(args.length < 2) {
-			plr.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &4Expected 1 arguments"));
+			plr.sendMessage(Utils.Prefix + Utils.toColour(" &4Expected 1 arguments"));
 			plr.playSound(plr, Sound.ENTITY_VILLAGER_NO, 0.5f, 1);
 			return true;
 		}
@@ -84,7 +84,7 @@ public class GeneratorCommand extends CustomCommand {
 		}).collect(Collectors.toList());
 		
 		if(spawnerList.size() < 1) {
-			plr.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &4There is no spawner at your current location."));
+			plr.sendMessage(Utils.Prefix + Utils.toColour(" &4There is no spawner at your current location."));
 			plr.playSound(plr, Sound.ENTITY_VILLAGER_NO, 0.5f, 1);
 			return true;
 		}
@@ -99,7 +99,7 @@ public class GeneratorCommand extends CustomCommand {
 		
 		Bukkit.getScheduler().cancelTask(id);
 		
-		plr.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &bSuccessfully removed spawner."));
+		plr.sendMessage(Utils.Prefix + Utils.toColour(" &bSuccessfully removed spawner."));
 		
 		config.set(world + "." + type, spawnerList);
 		getPlugin().saveConfig();
@@ -109,7 +109,7 @@ public class GeneratorCommand extends CustomCommand {
 	@SuppressWarnings({ "serial", "unchecked" })
 	private boolean create(Player plr, String[] args) {
 		if(args.length < 3) {
-			plr.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &4Expected 2 arguments"));
+			plr.sendMessage(Utils.Prefix + Utils.toColour(" &4Expected 2 arguments"));
 			plr.playSound(plr, Sound.ENTITY_VILLAGER_NO, 0.5f, 1);
 			return true;
 		}
@@ -120,7 +120,7 @@ public class GeneratorCommand extends CustomCommand {
 		Location position = plr.getLocation();
 		String type = args[1].toLowerCase();
 		if(!Utils.isNumeric(args[2])) {
-			plr.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &4Expected a number."));
+			plr.sendMessage(Utils.Prefix + Utils.toColour(" &4Expected a number."));
 			plr.playSound(plr, Sound.ENTITY_VILLAGER_NO, 0.5f, 1);
 			return true;
 		}
@@ -134,7 +134,7 @@ public class GeneratorCommand extends CustomCommand {
 			spawns.setAmount(count);
 		} else {
 			if(Material.matchMaterial(type) == null) {
-				plr.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &4Item '" + type + "' does not exist."));
+				plr.sendMessage(Utils.Prefix + Utils.toColour(" &4Item '" + type + "' does not exist."));
 				plr.playSound(plr, Sound.ENTITY_VILLAGER_NO, 0.5f, 1);
 				return true;
 			}
@@ -171,7 +171,7 @@ public class GeneratorCommand extends CustomCommand {
 				speed
 		);
 		
-		plr.sendMessage(Utils.toColour("&e[&l&3MiccGens&r&e]: &bSuccessfully created a generator of type '" + type + "'."));
+		plr.sendMessage(Utils.Prefix + Utils.toColour(" &bSuccessfully created a generator of type '" + type + "'."));
 		
 		getPlugin().saveConfig();
 		return false;
@@ -187,6 +187,7 @@ public class GeneratorCommand extends CustomCommand {
 				return getPlugin().itemList.stream().filter(m -> m.contains(args[1])).collect(Collectors.toList());
 			}
 			return getPlugin().itemList;
+
 		}
 		return null;
 	}
