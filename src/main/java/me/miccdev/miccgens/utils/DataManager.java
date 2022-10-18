@@ -1,4 +1,4 @@
-package me.miccdev.miccgens.files;
+package me.miccdev.miccgens.utils;
 
 import java.io.File;
 import java.io.IOException;

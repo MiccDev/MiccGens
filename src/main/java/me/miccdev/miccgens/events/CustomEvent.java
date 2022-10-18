@@ -7,16 +7,13 @@ import me.miccdev.miccgens.Main;
 public class CustomEvent implements Listener {
 
 	public static void init(Main plugin) {
-		new EntityDamageEntity(plugin);
-		
+		new InventoryOpen(plugin);
+		new InventoryClose(plugin);
 		new InventoryClick(plugin);
 		
 		new PlayerJoin(plugin);
 		new PlayerLeave(plugin);
 		new PlayerInteract(plugin);
-		
-		new InventoryOpen(plugin);
-		new InventoryClose(plugin);
 	}
 	
 	private Main plugin;

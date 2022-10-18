@@ -1,4 +1,4 @@
-package me.miccdev.miccgens.items.weapons;
+package me.miccdev.miccgens.items;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,11 +7,10 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import me.miccdev.miccgens.items.CustomItem;
 import me.miccdev.miccgens.utils.Utils;
 import net.kyori.adventure.text.Component;
 
-public class CustomWeapon extends CustomItem {
+public class Weapon extends CustomItem {
 
 	public static void init() {
 		createCustomItem("charcoal_sword", 
@@ -33,12 +32,12 @@ public class CustomWeapon extends CustomItem {
 		);
 	}
 	
-	public static CustomWeapon createCustomItem(String id, Material material, String name, List<String> lore) {
+	public static Weapon createCustomItem(String id, Material material, String name, List<String> lore) {
 		return createCustomItem(id, material, name, lore, 10f);
 	}
 	
-	public static CustomWeapon createCustomItem(String id, Material material, String name, List<String> lore, float damage) {
-		CustomWeapon item = new CustomWeapon(id, material, damage);
+	public static Weapon createCustomItem(String id, Material material, String name, List<String> lore, float damage) {
+		Weapon item = new Weapon(id, material, damage);
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.displayName(Component.text(Utils.toColour(name)));
@@ -55,16 +54,14 @@ public class CustomWeapon extends CustomItem {
 	
 	private float damage;
 	
-	public CustomWeapon(String id, Material material) {
+	public Weapon(String id, Material material) {
 		this(id, material, 10f);
 	}
 	
-	public CustomWeapon(String id, Material material, float damage) {
+	public Weapon(String id, Material material, float damage) {
 		super(id, material);
 		this.damage = damage;
 	}
-
-	
 	
 	public float getDamage() {
 		return damage;

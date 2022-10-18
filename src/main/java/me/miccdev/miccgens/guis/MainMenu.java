@@ -1,7 +1,6 @@
 package me.miccdev.miccgens.guis;
 
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.miccdev.miccgens.items.CustomItem;
@@ -26,12 +25,8 @@ public class MainMenu extends GUI {
 
 	@Override
 	public void onItemClick(Player player, ItemStack item) {
-		String uuid = player.getUniqueId().toString();
 		if(accessories.equals(item)) {
-			Accessories a = Accessories.getAccessoryInventory(uuid);
-			Inventory inv = a.getInventory();
 			
-			player.openInventory(inv);
 		} else if(shop.equals(item)) {
 			player.openInventory(GUI.getGui("shop").getInventory());
 		}

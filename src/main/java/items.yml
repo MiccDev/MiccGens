@@ -1,0 +1,10 @@
+# --------------------
+# Custom Items
+# --------------------
+
+# <item id>:
+#   <type>: CustomItemType
+#   <base material>: Material
+#   <display name>:
+#   [lore]: 
+#     - "&dHello World"

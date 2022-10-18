@@ -28,6 +28,9 @@ public class PlayerInteract extends CustomEvent {
 		for(CustomItem i : CustomItem.allItems.values()) {
 			if(!i.equals(heldItem)) continue;
 			i.onItemClick(player);
+			
+			if(a.isRightClick())
+				i.onItemRightClick(player);
 		}
 	}
 	
