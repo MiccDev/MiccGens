@@ -9,8 +9,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -71,7 +75,7 @@ public class CustomItem extends ItemStack {
 				createAccessory(lastString, material, displayName, lore);
 				break;
 			case WEAPON:
-				float damage = config.contains(lastString + ".damage") ? (float) config.get(lastString + ".damage") : 1f;
+				float damage = config.contains(lastString + ".damage") ? (float) ((Double) config.getDouble(lastString + ".damage")).floatValue() : 1f;
 				createWeapon(lastString, material, displayName, lore, damage);
 				break;
 			case ITEM:
@@ -93,6 +97,10 @@ public class CustomItem extends ItemStack {
 	public static Weapon createWeapon(String id, Material material, String name, List<String> lore, float damage, ClickRunnable onClick) {
 		Weapon item = new Weapon(id, material, damage);
 		editData(item, name, lore);
+		editAttribute(item, 
+				Attribute.GENERIC_ATTACK_DAMAGE,
+				new AttributeModifier("generic.attackDamage", damage, Operation.ADD_NUMBER)
+		);
 		return item;
 	}
 	
@@ -107,7 +115,20 @@ public class CustomItem extends ItemStack {
 		return item;
 	}
 	
-	private static ItemStack editData(ItemStack item, String name, List<String> lore) {
+	private static void editAttribute(ItemStack item, Attribute attr, AttributeModifier attrMod) {
+		ItemMeta meta = item.getItemMeta();
+		
+		meta.addAttributeModifier(attr, attrMod);
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		
+		List<Component> lores = meta.lore();
+		lores.add(Component.text(Utils.toColour("&8Damage: &9")));
+		
+		item.setItemMeta(meta);
+	}
+	
+	private static ItemMeta editData(ItemStack item, String name, List<String> lore) {
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.displayName(Component.text(Utils.toColour(name)));
@@ -119,7 +140,7 @@ public class CustomItem extends ItemStack {
 		meta.lore(lores);
 		
 		item.setItemMeta(meta);
-		return item;
+		return meta;
 	}
 	
 	
