@@ -20,7 +20,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import me.miccdev.miccgens.Main;
 import me.miccdev.miccgens.guis.GUI;
-import me.miccdev.miccgens.utils.DataManager;
 import me.miccdev.miccgens.utils.Utils;
 import net.kyori.adventure.text.Component;
 
@@ -42,17 +41,10 @@ public class CustomItem extends ItemStack {
 		createCustomItem("azalea_flower", Material.ALLIUM, "&r&7Azalea Flower", Arrays.asList("&d&oA flower harvested from the finest Azalea."));
 		
 		CustomItem.config = Main.itemData.getConfig();
-		
 		initAllItems();
-		
-		Accessory.init();
-		Weapon.init();
 	}
 	
-	public static void initAllItems() {
-		DataManager itemData = Main.itemData;
-		FileConfiguration config = itemData.getConfig();
-		
+	public static void initAllItems() {		
 		Set<String> itemIds = config.getKeys(false);
 		
 		for(String id : itemIds) {
@@ -99,23 +91,35 @@ public class CustomItem extends ItemStack {
 		editData(item, name, lore);
 		editAttribute(item, 
 				Attribute.GENERIC_ATTACK_DAMAGE,
-				new AttributeModifier("generic.attackDamage", damage, Operation.ADD_NUMBER)
+				new AttributeModifier("generic.attackDamage", damage, Operation.ADD_NUMBER),
+				"&8Damage: &9" + damage
 		);
 		return item;
 	}
 	
 	public static CustomItem createCustomItem(String id, Material material, String name, List<String> lore) {
-		return createCustomItem(id, material, name, lore, null);
+		return createCustomItem(id, material, name, lore, null, true);
+	}
+	
+	public static CustomItem createCustomItem(String id, Material material, String name, List<String> lore, boolean hidden) {
+		return createCustomItem(id, material, name, lore, null, hidden);
 	}
 	
 	public static CustomItem createCustomItem(String id, Material material, String name, List<String> lore, ClickRunnable onClick) {
-		CustomItem item = new CustomItem(id, material);
+		CustomItem item = new CustomItem(id, material, true);
 		item.setClickMethod(onClick);
 		editData(item, name, lore);
 		return item;
 	}
 	
-	private static void editAttribute(ItemStack item, Attribute attr, AttributeModifier attrMod) {
+	public static CustomItem createCustomItem(String id, Material material, String name, List<String> lore, ClickRunnable onClick, boolean hidden) {
+		CustomItem item = new CustomItem(id, material, hidden);
+		item.setClickMethod(onClick);
+		editData(item, name, lore);
+		return item;
+	}
+	
+	private static void editAttribute(ItemStack item, Attribute attr, AttributeModifier attrMod, String lore) {
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.addAttributeModifier(attr, attrMod);
@@ -123,7 +127,8 @@ public class CustomItem extends ItemStack {
 		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 		
 		List<Component> lores = meta.lore();
-		lores.add(Component.text(Utils.toColour("&8Damage: &9")));
+		lores.add(Component.text(""));
+		lores.add(Utils.toComponent(lore));
 		
 		item.setItemMeta(meta);
 	}
@@ -131,11 +136,14 @@ public class CustomItem extends ItemStack {
 	private static ItemMeta editData(ItemStack item, String name, List<String> lore) {
 		ItemMeta meta = item.getItemMeta();
 		
-		meta.displayName(Component.text(Utils.toColour(name)));
+		meta.displayName(Utils.toComponent(name));
+		meta.setUnbreakable(true);
+		
+		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 		
 		List<Component> lores = new ArrayList<Component>();
 		for(String line : lore) {
-			lores.add(Component.text(Utils.toColour(line)));
+			lores.add(Utils.toComponent(line));
 		}
 		meta.lore(lores);
 		
@@ -184,18 +192,20 @@ public class CustomItem extends ItemStack {
 	
 	public final String id;
 	public final CustomItemType itemType;
+	public final boolean hidden;
 	
 	private ClickRunnable click;
 	private ClickRunnable rightClick;
 	
-	public CustomItem(String id, Material material) {
-		this(id, material, CustomItemType.ITEM);
+	public CustomItem(String id, Material material, boolean hidden) {
+		this(id, material, CustomItemType.ITEM, hidden);
 	}
 	
-	public CustomItem(String id, Material material, CustomItemType itemType) {
+	public CustomItem(String id, Material material, CustomItemType itemType, boolean hidden) {
 		super(material);
 		this.id = id;
 		this.itemType = itemType;
+		this.hidden = hidden;
 		CustomItem.allItems.put(id, this);
 	}
 	
@@ -219,6 +229,7 @@ public class CustomItem extends ItemStack {
 		ItemMeta thisMeta = getItemMeta();
 		ItemMeta otherMeta = item.getItemMeta();
 		
+		if(thisMeta == null) return false;
 		if(otherMeta == null) return false;
 		return thisMeta.displayName().equals(otherMeta.displayName()) && getType().equals(item.getType());
 	}

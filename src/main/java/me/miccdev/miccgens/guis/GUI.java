@@ -50,7 +50,7 @@ public class GUI {
 		this.clickable = clickable;
 		this.pages = new ArrayList<GUI>();
 		this.contents = new ItemStack[slots];
-		this.inventory = Bukkit.createInventory(null, slots, Component.text(Utils.toColour(title)));
+		this.inventory = Bukkit.createInventory(null, slots, Utils.toComponent(title));
 		GUI.allGuis.put(id, this);
 	}
 	
@@ -78,11 +78,11 @@ public class GUI {
 		ItemStack item = new ItemStack(material);
 		ItemMeta meta = item.getItemMeta();
 		
-		meta.displayName(Component.text(Utils.toColour(name)));
+		meta.displayName(Utils.toComponent(name));
 		
 		List<Component> lores = new ArrayList<Component>();
 		for(String line : lore) {
-			lores.add(Component.text(Utils.toColour(line)));
+			lores.add(Utils.toComponent(line));
 		}
 		meta.lore(lores);
 		
@@ -136,7 +136,7 @@ public class GUI {
 	}
 	
 	public Inventory getInventoryClone(Player player, ItemStack[] items) {
-		Inventory inv = Bukkit.createInventory(null, slots, Component.text(Utils.toColour(title)));
+		Inventory inv = Bukkit.createInventory(null, slots, Utils.toComponent(title));
 		inv.setContents(items);
 		return inv;
 	}

@@ -8,8 +8,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.miccdev.miccgens.Main;
 import me.miccdev.miccgens.items.CustomItem;
+import me.miccdev.miccgens.utils.AnimatedBoard;
 import me.miccdev.miccgens.utils.Utils;
-import net.kyori.adventure.text.Component;
 
 public class PlayerJoin extends CustomEvent {
 	
@@ -23,9 +23,29 @@ public class PlayerJoin extends CustomEvent {
 		Location position = new Location(Bukkit.getWorld("world"), 53.5, -43, -19.5, -88.8f, 0.9f);
 		player.teleport(position);
 
-		event.joinMessage(Component.text(Utils.toColour("&e[&3&lMiccGens&r&e]: &r&bWelcome, " + player.getName() + " &bto the server!")));
+		event.joinMessage(Utils.toComponent(Utils.Prefix + " &r&bWelcome, " + player.getName() + " &bto the server!"));
 		
 		player.getInventory().setItem(8, CustomItem.getItem("menu"));
+		
+		createTablist(player);
+		createScoreboard(getPlugin(), player);
+	}
+	
+	private void createTablist(Player player) {
+		player.sendPlayerListHeader(Utils.toComponent(Utils.TITLE + "\n&8------------------"));
+		player.sendPlayerListFooter(Utils.toComponent("&8------------------\n" + "&7Players: &b" + Bukkit.getOnlinePlayers().size() + "&7/&b" + Bukkit.getMaxPlayers()));
+	}
+	
+	public static void createScoreboard(Main plugin, Player player) {
+		AnimatedBoard scoreboard = new AnimatedBoard(plugin, player.getUniqueId(), "miccgens", Utils.TITLE);
+		
+		scoreboard.createScore("rank", "  &3| &7Rank: ");
+		scoreboard.createScore("kd", "  &3| &7KD: ");
+		scoreboard.createScore("players", "  &3| &7Players: ");
+		scoreboard.createScore("world", "  &3| &7World: ");
+		scoreboard.createScore("  ", "  &b&omiccgens.com");
+		
+		scoreboard.finalizeScoreboard(player);
 	}
 	
 }

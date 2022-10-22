@@ -11,3 +11,5 @@ commands:
     description: Gives a custom item to the player.
   spawn:
     description: Teleports you to the spawn of the world you're in.
+  tutorial:
+    description: Teleports you to the tutorial room.

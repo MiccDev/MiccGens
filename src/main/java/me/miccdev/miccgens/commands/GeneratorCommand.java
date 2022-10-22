@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import me.miccdev.miccgens.Main;
 import me.miccdev.miccgens.items.CustomItem;
-import me.miccdev.miccgens.schedules.Spawner;
+import me.miccdev.miccgens.schedules.Generator;
 import me.miccdev.miccgens.utils.Utils;
 
 public class GeneratorCommand extends CustomCommand {
@@ -91,7 +91,7 @@ public class GeneratorCommand extends CustomCommand {
 		
 		spawnerList.remove(selected.get(0));
 		
-		int id = Spawner.getSpawnerByPosition(
+		int id = Generator.getGeneratorByPosition(
 				(int) position.getX(), 
 				(int) position.getY(), 
 				(int) position.getZ()
@@ -164,7 +164,7 @@ public class GeneratorCommand extends CustomCommand {
 		
 		config.set(world + "." + type, spawnerList);
 
-		new Spawner(
+		new Generator(
 				getPlugin(),
 				spawns, 
 				position,

@@ -20,7 +20,7 @@ public class InventoryClick extends CustomEvent {
 	public void onInventoryClick(InventoryClickEvent e) {
 		ItemStack currentItem = e.getCurrentItem();
 		if(CustomItem.getItem("menu").equals(currentItem)) {
-			e.setCancelled(false);
+			e.setCancelled(true);
 		}
 		
 		for(GUI gui : GUI.allGuis.values()) {

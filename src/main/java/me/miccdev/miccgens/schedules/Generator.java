@@ -19,42 +19,40 @@ import org.bukkit.util.Vector;
 import me.miccdev.miccgens.Main;
 import me.miccdev.miccgens.items.CustomItem;
 
-public class Spawner extends Schedule {
+public class Generator extends Schedule {
 	
 	private static FileConfiguration config;
 	private static Main plugin;
 	
-	public static void init(Main plugin, FileConfiguration config) {
-		Spawner.config = config;
-		Spawner.plugin = plugin;
+	public static void init(Main plugin) {
+		Generator.config = Main.generatorData.getConfig();
+		Generator.plugin = plugin;
 		
 		Set<String> worlds = config.getKeys(false);
 		
 		for(String worldName : worlds) {
 			World world = Bukkit.getWorld(worldName);
-			initSpawners(world, worldName);
+			initGenerators(world, worldName);
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void initSpawners(World world, String lastString) {
-//		initCoalSpawners(world, config);
-		
-		Set<String> spawners = config.getConfigurationSection(lastString).getKeys(false);
-		for(String spawnerType : spawners) {
-			List<Map<String, Object>> spawnerList = (List<Map<String, Object>>) config.getList(lastString + "." + spawnerType);
-			for(Map<String, Object> spawner : spawnerList) {
-				initSpawner(world, spawnerType, spawner);
+	private static void initGenerators(World world, String lastString) {
+		Set<String> generators = config.getConfigurationSection(lastString).getKeys(false);
+		for(String generatorType : generators) {
+			List<Map<String, Object>> generatorList = (List<Map<String, Object>>) config.getList(lastString + "." + generatorType);
+			for(Map<String, Object> generator : generatorList) {
+				initGenerator(world, generatorType, generator);
 			}
 		}
 	}
 	
-	private static void initSpawner(World world, String item, Map<String, Object> spawner) {
-		Vector vec = getPosition(spawner);
+	private static void initGenerator(World world, String item, Map<String, Object> generator) {
+		Vector vec = getPosition(generator);
 		Location position = new Location(world, vec.getX(), vec.getY(), vec.getZ());
 		
 		String type = item.toLowerCase();
-		int count = getCount(spawner);
+		int count = getCount(generator);
 		
 		ItemStack spawns;
 		if(CustomItem.hasItem(type)) {
@@ -64,17 +62,17 @@ public class Spawner extends Schedule {
 			spawns = new ItemStack(Material.matchMaterial(type), count);
 		}
 		
-		new Spawner(
+		new Generator(
 				plugin,
 				spawns,
 				position, 
-				getSpeed(spawner)
+				getSpeed(generator)
 		);
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static Vector getPosition(Map<String, Object> spawner) {
-		LinkedHashMap<String, Integer> position = (LinkedHashMap<String, Integer>) spawner.get("pos");
+	private static Vector getPosition(Map<String, Object> generator) {
+		LinkedHashMap<String, Integer> position = (LinkedHashMap<String, Integer>) generator.get("pos");
 		int x = position.get("x");
 		int y = position.get("y");
 		int z = position.get("z");
@@ -82,16 +80,16 @@ public class Spawner extends Schedule {
 		return new Vector(x, y, z);
 	}
 	
-	private static int getCount(Map<String, Object> spawner) {
-		return spawner.containsKey("count") ? (int) spawner.get("count") : 1;
+	private static int getCount(Map<String, Object> generator) {
+		return generator.containsKey("count") ? (int) generator.get("count") : 1;
 	}
 	
-	private static long getSpeed(Map<String, Object> spawner) {
-		return spawner.containsKey("speed") ? ((Double) spawner.get("speed")).longValue() : 1L;
+	private static long getSpeed(Map<String, Object> generator) {
+		return generator.containsKey("speed") ? ((Double) generator.get("speed")).longValue() : 1L;
 	}
 	
-	public static Spawner getSpawnerByPosition(int x, int y, int z) {
-		return allSpawners.stream().filter(sp -> {
+	public static Generator getGeneratorByPosition(int x, int y, int z) {
+		return allGenerators.stream().filter(sp -> {
 			Location pos = sp.location;
 			return ((int) pos.getX()) == x &&
 					((int) pos.getY()) == y &&
@@ -99,24 +97,24 @@ public class Spawner extends Schedule {
 		}).collect(Collectors.toList()).get(0);
 	}
 	
-	public static List<Spawner> allSpawners = new ArrayList<Spawner>();
+	public static List<Generator> allGenerators = new ArrayList<Generator>();
 	
 	private ItemStack spawns;
 	private Location location;
 	
-	public Spawner(Main plugin, ItemStack spawns) {
+	public Generator(Main plugin, ItemStack spawns) {
 		this(plugin, spawns, null);
 	}
 	
-	public Spawner(Main plugin, ItemStack spawns, Location location) {
+	public Generator(Main plugin, ItemStack spawns, Location location) {
 		this(plugin, spawns, location, 1);
 	}
 	
-	public Spawner(Main plugin, ItemStack spawns, Location location, float speed) {
+	public Generator(Main plugin, ItemStack spawns, Location location, float speed) {
 		super(plugin, (long) speed * 20);
 		this.location = location;
 		this.spawns = spawns;
-		Spawner.allSpawners.add(this);
+		Generator.allGenerators.add(this);
 	}
 	
 	@Override
