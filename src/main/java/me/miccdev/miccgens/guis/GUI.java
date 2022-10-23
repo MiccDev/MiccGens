@@ -55,7 +55,7 @@ public class GUI {
 	}
 	
 	public GUI createPage(ItemStack[] items) {
-		GUI page = new GUI(id + pages.size() + 1, title, slots);
+		GUI page = new GUI(id + (pages.size() + 1), title, slots);
 		page.setContents(items);
 		pages.add(page);
 		return page;

@@ -19,7 +19,7 @@ public class Utils {
 	
 	@SuppressWarnings("serial")
 	public static Map<String, String> WORLDS = new HashMap<String, String>() {
-		{ put("world", "Overworld"); }
+		{ put("world", "Serenity Valley"); }
 		{ put("grim_winds", "Grim Winds"); }
 	};
 

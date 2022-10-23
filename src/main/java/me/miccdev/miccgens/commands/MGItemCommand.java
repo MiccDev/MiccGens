@@ -57,6 +57,7 @@ public class MGItemCommand extends CustomCommand {
 		if(args.length == 1) {
 			return CustomItem.allItems.values().stream()
 					.map(item -> {
+						if(item.hidden) return "";
 						return item.id;
 					}).collect(Collectors.toList());
 		}

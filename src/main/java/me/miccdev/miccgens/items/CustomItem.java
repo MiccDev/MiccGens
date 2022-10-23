@@ -38,8 +38,6 @@ public class CustomItem extends ItemStack {
 		createCustomItem("accessories", Material.NETHER_STAR, "&3&lAccessories", Arrays.asList("&bOpens the accessory menu."));
 		createCustomItem("shop", Material.EMERALD, "&aShop", Arrays.asList("&bOpens the shop menu in the current world"));
 		
-		createCustomItem("azalea_flower", Material.ALLIUM, "&r&7Azalea Flower", Arrays.asList("&d&oA flower harvested from the finest Azalea."));
-		
 		CustomItem.config = Main.itemData.getConfig();
 		initAllItems();
 	}
@@ -94,6 +92,12 @@ public class CustomItem extends ItemStack {
 				new AttributeModifier("generic.attackDamage", damage, Operation.ADD_NUMBER),
 				"&8Damage: &9" + damage
 		);
+		return item;
+	}
+	
+	public static ItemStack createItem(Material material, String name, List<String> lore) {
+		ItemStack item = new ItemStack(material, 1);
+		editData(item, name, lore);
 		return item;
 	}
 	
