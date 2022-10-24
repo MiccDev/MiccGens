@@ -2,6 +2,8 @@ package me.miccdev.miccgens.commands;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +25,14 @@ public abstract class CustomCommand implements CommandExecutor, TabCompleter {
 		createCommand(plugin, "tutorial", new CommandRunnable() {
 			@Override
 			public boolean run(CommandSender sender, Command command, String label, String[] args) {
+				if(!(sender instanceof Player)) {
+					sender.sendMessage(Utils.Prefix + Utils.toColour(" &4Only players can use this command!"));
+					return true;
+				}
 				
+				Player plr = (Player) sender;
+				Location location = new Location(Bukkit.getWorld("world"), 6, -60, 84, 0f, 0f);
+				plr.teleport(location);
 				return false;
 			}
 		});

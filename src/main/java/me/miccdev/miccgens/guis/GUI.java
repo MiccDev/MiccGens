@@ -40,10 +40,14 @@ public class GUI {
 	private ItemStack[] contents;
 	
 	public GUI(String id, String title, int slots) {
-		this(id, title, slots, false);
+		this(id, title, slots, false, true);
 	}
 	
 	public GUI(String id, String title, int slots, boolean clickable) {
+		this(id, title, slots, clickable, true);
+	}
+	
+	public GUI(String id, String title, int slots, boolean clickable, boolean addToList) {
 		this.id = id;
 		this.title = title;
 		this.slots = slots;
@@ -51,7 +55,9 @@ public class GUI {
 		this.pages = new ArrayList<GUI>();
 		this.contents = new ItemStack[slots];
 		this.inventory = Bukkit.createInventory(null, slots, Utils.toComponent(title));
-		GUI.allGuis.put(id, this);
+		
+		if(addToList)
+			GUI.allGuis.put(id, this);
 	}
 	
 	public GUI createPage(ItemStack[] items) {
@@ -136,7 +142,7 @@ public class GUI {
 	}
 	
 	public Inventory getInventoryClone(Player player, ItemStack[] items) {
-		Inventory inv = Bukkit.createInventory(null, slots, Utils.toComponent(title));
+		Inventory inv = Bukkit.createInventory(player, slots, Utils.toComponent(title));
 		inv.setContents(items);
 		return inv;
 	}

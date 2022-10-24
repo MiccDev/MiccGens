@@ -1,9 +1,10 @@
 package me.miccdev.miccgens.entity;
 
-public abstract class CustomEntity {
+import org.bukkit.entity.LivingEntity;
+
+public abstract class CustomEntity implements LivingEntity {
 
 	public CustomEntity() {
-		
 	}
 	
 }

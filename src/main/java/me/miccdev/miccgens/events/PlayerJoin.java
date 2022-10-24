@@ -1,6 +1,7 @@
 package me.miccdev.miccgens.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,6 +23,8 @@ public class PlayerJoin extends CustomEvent {
 		Player player = event.getPlayer();
 		Location position = new Location(Bukkit.getWorld("world"), 53.5, -43, -19.5, -88.8f, 0.9f);
 		player.teleport(position);
+		
+		player.setGameMode(GameMode.ADVENTURE);
 
 		event.joinMessage(Utils.toComponent(Utils.Prefix + " &r&bWelcome, " + player.getName() + " &bto the server!"));
 		

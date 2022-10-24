@@ -1,7 +1,6 @@
 package me.miccdev.miccgens.commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +66,7 @@ public class GeneratorCommand extends CustomCommand {
 			return true;
 		}
 		
-		FileConfiguration config = getPlugin().getConfig();
+		FileConfiguration config = Main.generatorData.getConfig();
 		
 		String world = plr.getWorld().getName();
 		Location position = plr.getLocation();
@@ -102,7 +101,7 @@ public class GeneratorCommand extends CustomCommand {
 		plr.sendMessage(Utils.Prefix + Utils.toColour(" &bSuccessfully removed spawner."));
 		
 		config.set(world + "." + type, spawnerList);
-		getPlugin().saveConfig();
+		Main.generatorData.saveConfig();
 		return false;
 	}
 	
@@ -114,7 +113,7 @@ public class GeneratorCommand extends CustomCommand {
 			return true;
 		}
 		
-		FileConfiguration config = getPlugin().getConfig();
+		FileConfiguration config = Main.generatorData.getConfig();
 		
 		String world = plr.getWorld().getName();
 		Location position = plr.getLocation();
@@ -173,22 +172,22 @@ public class GeneratorCommand extends CustomCommand {
 		
 		plr.sendMessage(Utils.Prefix + Utils.toColour(" &bSuccessfully created a generator of type '" + type + "'."));
 		
-		getPlugin().saveConfig();
+		Main.generatorData.saveConfig();
 		return false;
 	}
 
 	@Override
 	public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
 			@NotNull String label, @NotNull String[] args) {
-		if(args.length == 1) {
-			return Arrays.asList("create", "remove");
-		} else if(args.length == 2) {
-			if(args[1].length() > 0) {
-				return getPlugin().itemList.stream().filter(m -> m.contains(args[1])).collect(Collectors.toList());
-			}
-			return getPlugin().itemList;
-
-		}
+//		if(args.length == 1) {
+//			return Arrays.asList("create", "remove");
+//		} else if(args.length == 2) {
+//			if(args[1].length() > 0) {
+//				return getPlugin().itemList.stream().filter(m -> m.contains(args[1])).collect(Collectors.toList());
+//			}
+//			return getPlugin().itemList;
+//
+//		}
 		return null;
 	}
 	

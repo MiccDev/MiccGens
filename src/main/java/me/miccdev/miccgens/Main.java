@@ -60,12 +60,59 @@ public class Main extends JavaPlugin {
 			
 			@Override
 			public void run() {
+				String text = Utils.TITLE;
+				
+				if(count == 12)
+					count = 0;
+				
+				switch(count) {
+				case 0:
+					text = "&b&lM&l&3iccGens";
+					break;
+				case 1:
+					text = "&3&lM&b&li&3&lccGens";
+					break;
+				case 2:
+					text = "&3&lMi&b&lc&3&lcGens";
+					break;
+				case 3:
+					text = "&3&lMic&b&lc&3&lGens";
+					break;
+				case 4:
+					text = "&3&lMicc&b&lG&3&lens";
+					break;
+				case 5:
+					text = "&3&lMiccG&b&le&3&lns";
+					break;
+				case 6:
+					text = "&3&lMiccGe&b&ln&3&ls";
+					break;
+				case 7:
+					text = "&3&lMiccGen&b&ls";
+					break;
+				case 8:
+					text = "&3&lMiccGens";
+					break;
+				case 9:
+					text = "&b&lMiccGens";
+					break;
+				case 10:
+					text = "&3&lMiccGens";
+					break;
+				case 11:
+					text = "&b&lMiccGens";
+					break;
+				}
+				
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					ScoreboardUtils scoreboard = ScoreboardUtils.scoreboards.get(p.getUniqueId());
-					if(count == 12)
-						count = 0;
 					
-					double kd = p.getStatistic(Statistic.PLAYER_KILLS) / p.getStatistic(Statistic.DEATHS);
+					int kills = p.getStatistic(Statistic.PLAYER_KILLS);
+					int deaths = p.getStatistic(Statistic.DEATHS);
+					double kd = 0;
+					if(kills > 0 && deaths > 0) {
+						 kd = kills / deaths;
+					}
 					String world = Utils.WORLDS.get(p.getWorld().getName());
 					String rank = PlaceholderAPI.setPlaceholders(p, "%luckperms_prefix%");
 					
@@ -73,47 +120,6 @@ public class Main extends JavaPlugin {
 					scoreboard.setSuffix("kd", "&3" + Utils.round(kd, 1));
 					scoreboard.setSuffix("players", "&3" + Bukkit.getOnlinePlayers().size() + "&7/&3" + Bukkit.getMaxPlayers());
 					scoreboard.setSuffix("world", "&3" + world);
-					
-					String text = Utils.TITLE;
-					
-					switch(count) {
-					case 0:
-						text = "&b&lM&l&3iccGens";
-						break;
-					case 1:
-						text = "&3&lM&b&li&3&lccGens";
-						break;
-					case 2:
-						text = "&3&lMi&b&lc&3&lcGens";
-						break;
-					case 3:
-						text = "&3&lMic&b&lc&3&lGens";
-						break;
-					case 4:
-						text = "&3&lMicc&b&lG&3&lens";
-						break;
-					case 5:
-						text = "&3&lMiccG&b&le&3&lns";
-						break;
-					case 6:
-						text = "&3&lMiccGe&b&ln&3&ls";
-						break;
-					case 7:
-						text = "&3&lMiccGen&b&ls";
-						break;
-					case 8:
-						text = "&3&lMiccGens";
-						break;
-					case 9:
-						text = "&b&lMiccGens";
-						break;
-					case 10:
-						text = "&3&lMiccGens";
-						break;
-					case 11:
-						text = "&b&lMiccGens";
-						break;
-					}
 					
 					scoreboard.setDisplayName(text);
 					

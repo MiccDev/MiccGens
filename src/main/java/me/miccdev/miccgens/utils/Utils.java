@@ -49,6 +49,19 @@ public class Utils {
 		return Component.text(toColour(text));
 	}
 	
+	public static String decapitalize(String string) {
+	    if (string == null || string.length() == 0) {
+	        return string;
+	    }
+	    
+	    string = string.toLowerCase();
+
+	    char c[] = string.toCharArray();
+	    c[0] = Character.toUpperCase(c[0]);
+
+	    return new String(c);
+	}
+	
 	public static double round(double value, int precision) {
 	    int scale = (int) Math.pow(10, precision);
 	    return (double) Math.round(value * scale) / scale;

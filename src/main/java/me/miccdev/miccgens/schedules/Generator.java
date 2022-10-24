@@ -129,7 +129,7 @@ public class Generator extends Schedule {
 		World world = location.getWorld();
 		
 		if(location != null) {
-			world.dropItemNaturally(location, spawns);
+			world.dropItem(location, spawns);
 		}
 	}
 	

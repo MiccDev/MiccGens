@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,7 +44,10 @@ public class MGItemCommand extends CustomCommand {
 			return true;
 		}
 		
-		CustomItem item = CustomItem.getItem(args[0]);
+		int count = args.length == 2 ? Integer.parseInt(args[1]) : 1;
+		
+		ItemStack item = CustomItem.getItem(args[0]).clone();
+		item.setAmount(count);
 		
 		plr.getInventory().addItem(item);
 		plr.sendMessage(Utils.Prefix + Utils.toColour(" &bSuccessfully given you " + item.getItemMeta().getDisplayName() + "."));
